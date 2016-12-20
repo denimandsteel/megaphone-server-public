@@ -27,4 +27,6 @@ Make sure you have the following environment variables set up:
 * Stripe: `STRIPE_PUBLISHABLE_KEY` and `STRIPE_SECRET_KEY`
 * AWS and S3: `ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `S3_REGION` and `S3_BUCKET`
 
+## Further Reading / Useful Links
+
 * [Megaphone Magazine](http://www.megaphonemagazine.com/)
