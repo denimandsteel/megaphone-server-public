@@ -1,6 +1,6 @@
 # Megaphone Server
 
-The server-side code for [Megaphone Magazine's App](https://github.com/denimandsteel/megaphone-app-public), helps customers find and pay vendors on the streets of Vancouver and Victoria, BC. You can use this code under MIT license and make the necessary changes to make it work with your street paper and your city.
+The server-side code for [Megaphone Magazine's App](https://github.com/denimandsteel/megaphone-app-public), helps customers find and pay vendors on the streets of Vancouver and Victoria, BC. You can use this code under Non-Profit Open Software license and make the necessary changes to make it work with your street paper and your city.
 
 This backend service is built with Ruby on Rails.
 
