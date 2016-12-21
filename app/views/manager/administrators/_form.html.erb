@@ -1,0 +1,60 @@
+<%= form_for [:manager, @administrator] do |f| %>
+  <% if @administrator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@administrator.errors.count, "error") %> prohibited this administrator from being saved:</h2>
+
+      <ul>
+      <% @administrator.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :full_name %><br />
+        <%= f.text_field :full_name, autofocus: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :password %> <em>(8 characters minimum)</em><br />
+        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :manager, "Manager?" %>
+        <%= f.check_box :manager %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-success pull-right" %>
+        <% unless @administrator.new_record? %>
+        <%= link_to 'Delete', manager_administrator_path(@administrator), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

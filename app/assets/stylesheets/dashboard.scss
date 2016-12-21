@@ -1,0 +1,58 @@
+.dashboard-product {
+  margin: 15px 0; 
+  text-align: center;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .product-title {
+    margin-top: 5px;
+  }
+}
+
+.vendor-card {
+  margin-bottom: 15px;
+}
+
+.unclaimed-payments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 5px;
+  a:hover {
+    text-decoration: none !important;
+    background-color: #CCE5FF;
+    border-radius: 5px;
+  }
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  a:hover {
+    text-decoration: none !important;
+    background-color: #CCE5FF;
+    border-radius: 5px;
+  }
+}
+
+.profile-image-container {
+  overflow: hidden;
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.awaiting-payments {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100px; 
+  height: 140px;
+
+  .vendor-name {
+    margin-top: 5px;
+  }
+}

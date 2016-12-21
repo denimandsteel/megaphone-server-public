@@ -1,0 +1,46 @@
+<h1>
+  Purchases Report
+</h1>
+
+<p>
+  <%= link_to "Download CSV", report_purchases_path(format: "csv"), class: "btn btn-primary" %>
+  <%=  @downloaded_on.strftime("Last Downloaded On %B #{@downloaded_on.day.ordinalize} @ %I:%M%p") if @downloaded_on.present? %>
+</p>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr class="vendor-list-header">
+          <th><%= sortable 'id' %></th>
+          <th><%= sortable 'vendor_id', "Vendor" %></th>
+          <th>Products</th>
+          <th><%= sortable 'created_at', "Date Of Sale" %></th>
+          <th><%= sortable 'amount', "Total" %></th>
+          <th><%= sortable 'paid', 'Paid Out?' %></th>
+          <th><%= sortable 'paid_at', "Paid On" %></th>
+          <th><%= sortable 'paid_by_id', "Paid By" %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @purchases.each do |purchase| %>
+          <tr class="vendor-row" data-link="<%= purchase.paid ? "#!" : vendor_path(purchase.vendor) %>">
+            <td><%= purchase.id %></td>
+            <td><%= purchase.vendor.name %></td>
+            <td><%= purchase.products_titles %></td>
+            <td><%= purchase.created_at.strftime("%B #{purchase.created_at.day.ordinalize}, %Y") %></td>
+            <td><%= number_to_currency purchase.total_amount / 100.0 %></td>
+            <td><%= purchase.paid ? "Yes" : "No" %></td>
+            <td><%= purchase.paid_at.try { strftime("%B #{purchase.paid_at.day.ordinalize}, %Y")}   %></td>
+            <td><%= purchase.paid_by.try { full_name.titleize } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= paginate @purchases %>
+    </div>
+  </div>
+</div>

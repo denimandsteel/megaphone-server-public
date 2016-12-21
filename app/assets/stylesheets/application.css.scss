@@ -1,0 +1,50 @@
+@import "bootstrap";
+@import "vendors";
+@import "products";
+@import "dashboard";
+@import "dragula";
+
+nav {
+  margin-bottom: 0 !important;
+  .container-fluid {
+    height: 60px;
+    .nav {
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 18px;
+    }
+  }
+  a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  .active {
+    // border-bottom: 1px solid gray;
+    a {
+      // background-color: #f8f8f8 !important;
+      color: white !important;
+      background-color: #555 !important;
+      border-radius: 5px;
+    }
+  }
+}
+
+.nested-row {
+  margin-left: 0;
+}
+
+label {
+  cursor: pointer;
+}
+
+.back-button {
+  display: block;
+  margin: 20px 0 10px;
+}
+
+.info {
+  background-color: #FFFFCC;
+  padding: 5px;
+  /*border: 1px solid #DDDDDD;*/
+}

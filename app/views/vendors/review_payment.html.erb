@@ -1,0 +1,47 @@
+<%= link_to raw("&larr; Back To Vendor"), vendor_path(@vendor), class: 'back-button' %>
+
+<h1><%= @vendor.name %> - <%= purchases_date_range(@unpaid_purchases) %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <table class="table payout-table">
+      <thead>
+        <tr>
+          <th>Ref</th>
+          <th>Date</th>
+          <th>Products</th>
+          <th>Sub Total</th>
+          <th>Tips</th>
+          <th>Total</th>
+          <th>Location</th>
+        </tr>  
+      </thead>
+      <tbody>      
+        <% @unpaid_purchases.each do |purchase| %>
+          <tr>
+            <td><%= purchase.transaction_id %></td>
+            <td><%= purchase.created_at.strftime("%b #{purchase.created_at.day}, %Y") %></td>
+            <td>
+              <ul>
+                <% products_titles_and_count(purchase).each do |product, count| %>
+                  <li><%= count %> x <%= product %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td><%= number_to_currency purchase.products_amount / 100.0 %></td>
+            <td><%= number_to_currency purchase.tips / 100.0 %></td>
+            <td><%= number_to_currency purchase.total_amount / 100.0 %></td>
+            <td>Unavailable</td> <!-- Will Be Replaced With Geolocation And Will Be A Link To Google Maps -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h1>Total Due: <%= number_to_currency @vendor.owed_amount / 100.0 %></h1>
+
+<div class="payout-buttons">
+  <a href="javascript:window.print();" class="btn btn-success">Print Payout Receipt</a>
+  <%= link_to "Pay Vendor", purchase_path(@vendor), method: :put, class: "btn btn-success", data: { confirm: "#{@vendor.name}'s Sales\n#{purchases_date_range(@unpaid_purchases)} \nTotal Due: #{number_to_currency @vendor.owed_amount / 100.0 } \n\nOk to make this payment?"} %>
+</div>

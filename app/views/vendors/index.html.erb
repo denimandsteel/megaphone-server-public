@@ -1,0 +1,30 @@
+<h1>
+  Vendors
+</h1>
+
+<%= link_to "Add New Vendor", new_vendor_path, class: "btn btn-primary new-vendor-btn" if current_administrator.try(:manager) %>
+
+<div class="row">
+  <div class="col-md-8">
+    <table class="table">
+      <thead>
+        <tr class="vendor-list-header">
+          <th><%= sortable 'id' %></th>
+          <th><%= sortable 'name' %></th>
+          <th>Neighbourhoods</th>
+          <th><%= sortable 'in_app', 'Visible In App?' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vendors.each do |vendor| %>
+          <tr class="vendor-row" data-link="<%= vendor_path(vendor) %>">
+            <td><%= vendor.id %></td>
+            <td><%= vendor.name %></td>
+            <td><%= vendor_neighbourhoods(vendor) %></td>
+            <td><%= vendor.in_app ? "Yes" : "No" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= f.label :name, "Location Name" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= f.label :neighbourhood %>
+      <%= f.hidden_field :city %>
+      <%= f.select :neighbourhood, neighbourhoods_for_dropdown, {:prompt => "Neighbourhood"}, { class: "form-control neighbourhood-dropdown"} %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :hours %>
+      <%= f.text_field :hours, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :cross_street %>
+      <%= f.text_field :cross_street, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= f.label :description, "Location Description" %>
+      <%= f.text_area :description, class: "form-control", rows: 3 %>
+    </div>
+  </div> 
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= f.check_box :_destroy, { class: "location-destroy-checkbox" } %>
+    <%= f.label :_destroy, "Remove Location" %>
+  </div>  
+</div>

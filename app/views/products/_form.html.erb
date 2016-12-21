@@ -1,0 +1,100 @@
+<% if @product.errors.any? %>
+  <div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">Please fix the following:</h3>
+    </div>
+    <div class="panel-body">           
+      <ul>
+        <% @product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end -%>
+      </ul>
+    </div>
+  </div>
+<% end -%>
+
+<%= form_for @product, html: { multipart: true } do |f| %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :description %> <span class="js_product_description_count description-count">(<span class="count"></span> characters)</span>
+        <%= f.text_area :description, class: "form-control", rows: 3 %>
+      </div>      
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :category %>
+        <%= f.select :category, ["Feature", "Magazine"], {:prompt => "Type"}, { class: "form-control"} %>  
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :price, "Price" %>
+        <%= f.text_field :price_in_dollars, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>       
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :image %>
+        <p>Product images should be at least 350px wide with a ratio of 3:4. Ideal image size is 600x800 pixel.</p>
+        <%= f.file_field :image %>  
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :in_app, "Show In App" %>
+        <%= f.check_box :in_app %>
+      </div>
+    </div>       
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :order %>
+        <%= f.select :order, options_for_select(["1", "2", "3", "4", "5"], @product.order), class: "form-control" %>
+      </div>
+    </div>       
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= label_tag('notify_update', "Notify customers that a new item is available") %>
+        <%= check_box_tag("notify_update") %> 
+        <p class='info'>Last notification sent: 
+          <% if @product.last_notification_date.blank? %>
+            Never
+          <% else %>
+            <%= time_ago_in_words(@product.last_notification_date) %> ago
+          <% end %>
+        </p>
+      </div>
+    </div>       
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-success pull-right" %>
+        <%= link_to "Delete", product_path(@product), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure you want to delete this product?" } if (controller?('products') && action?('edit')) %>
+      </div>      
+    </div>    
+  </div>
+
+<% end %>

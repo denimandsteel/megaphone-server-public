@@ -1,0 +1,26 @@
+<h1>Staff</h1>
+
+<%= link_to "Add Staff", new_manager_administrator_path, class: "btn btn-primary new-vendor-btn" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= sortable 'full_name', 'Name' %></th>
+          <th><%= sortable 'manager', 'Role' %></th>
+          <th><%= sortable 'created_by', 'Added By' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @administrators.each do |administrator| %>
+          <tr class="vendor-row" data-link="<%= edit_manager_administrator_path(administrator) %>">
+            <td><%= administrator.full_name.titleize %></td>
+            <td><%= administrator.manager ? "Manager" : "Volunteer" %></td>
+            <td><%= administrator.created_by.try { full_name.titleize } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+</div>

@@ -1,0 +1,115 @@
+// Place all the styles related to the vendors controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.vendor-row, .product-row {
+  color: #337ab7;
+  &:hover {
+    cursor: pointer;
+    background-color: #CCE5FF;
+  }
+}
+
+.vendor-location-fields {
+  margin: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.location-details {
+  @extend .vendor-location-fields;
+  margin-left: 0;
+  border-bottom: none;
+}
+
+.delete-location {
+  opacity: 0.3;
+}
+
+.new-vendor-btn, .new-product-btn {
+  margin-bottom: 10px;
+}
+
+.vendor-list-header {
+  span {
+    display: none;
+  }
+}
+
+.active-column {
+  .asc {
+    transform: rotate(180deg)
+  }
+  span {
+    display: inline-block;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.vendor-earnings {
+  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+  margin-top: 15px;
+  div:nth-child(1) {
+    padding-left: 0;
+  }
+  .vendor-payout {
+    margin-top: 15%;
+  }
+}
+
+.vendor-products {
+  @extend .vendor-earnings;
+}
+
+.vendor-products-form {
+  margin: 10px 0 15px 0;
+}
+
+.vendor-edited-by {
+  border-top: 1px solid gray;
+  p {
+    margin-top: 10px;
+  }
+}
+
+.purchase-summary {
+  margin-left: 2%; 
+  margin-right: 2%;
+}
+
+.purchased-on {
+  text-decoration: underline;
+}
+
+.payout-table {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+@media print {
+  .back-button {
+    display: none !important;
+  }
+  table {
+    width: 100%;
+  }
+  .payout-buttons {
+    display: none;
+  }
+  @media (min-width: 992px) {
+    .col-md-8 {
+        width: 100%;
+    }
+  }
+}
+

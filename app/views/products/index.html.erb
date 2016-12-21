@@ -1,0 +1,20 @@
+<h1>Products</h1>
+
+<%= link_to "Add New Product", new_product_path, class: "btn btn-primary new-vendor-btn" %>
+
+<div class="products-container">
+<% @products.each do |product| %>
+  <div class="row product-details" data-product-id="<%= product.id %>">
+    <div class="grab-handle">Move</div>
+    <div class="col-md-2">
+      <%= image_tag product.image.profile.url, class: "cover-image" %>
+    </div>
+    <div class="col-md-3">
+      <h3><%= product.title %></h3>
+      <p><%= number_to_currency product.price / 100.0 %></p>
+      <p><%= product.in_app ? "Shown in app" : "Not shown in app" %></p>
+      <%= link_to "Edit Product", edit_product_path(product), class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+</div>

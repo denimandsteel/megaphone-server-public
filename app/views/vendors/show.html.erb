@@ -1,0 +1,101 @@
+<%= link_to raw("&larr; Back To Dashboard"), dashboard_path, class: 'back-button' %>
+<%= link_to raw("&larr; Back To Vendors"), vendors_path, class: 'back-button' %>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="row nested-row">
+      <h1>
+        <%= @vendor.name %> <!-- <small>(Badge ID: <%#= @vendor.badge_id %>)</small>  -->  
+        <%= link_to "Edit Vendor", edit_vendor_path(@vendor), class: "btn btn-primary" if current_administrator.try(:manager) %>
+      </h1>
+      <h4><%= @vendor.in_app ? "Visible In App" : "Not Visible In App" %></h4>
+    </div>
+
+    <!-- To be replaced with transactions/payments info -->
+    <div class="row nested-row vendor-earnings">
+      <% if @vendor.owed_amount.present? %>
+        <div class="col-md-6">
+          <div class="col-md-5">
+            <strong>Owing:</strong><br/> 
+            <%= number_to_currency @vendor.owed_amount / 100.0 %>
+          </div>
+          <div class="col-md-4">
+            <!-- Coming soon... -->
+            <%= link_to 'Pay Vendor', review_payment_vendor_path(@vendor), class: "btn btn-success btn-sm vendor-payout" %>
+          </div>
+        </div>
+      <% end %>
+      <% if @last_payment.present? %>
+        <div class="col-md-6">
+          <strong>Last Payout:</strong><br/>
+          <%=  @last_payment.created_at.strftime("%B #{@last_payment.created_at.day.ordinalize}, %Y") %> | <%= number_to_currency @last_payment.amount / 100.0 %><br/>  by <%= @last_payment.paid_by.full_name.titleize %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="row nested-row vendor-products">
+      <h4>Products Carried</h4>
+      <% if @vendor.products.present? %>
+        <ul>
+          <% @vendor.products.each do |product| %>
+            <li><%= product.title %></li>
+          <% end %>
+          <% if @vendor.has_back_issues %>
+            <li>Back Issues</li>
+          <% end %>
+        </ul>
+      <% else %>
+        <%= @vendor.name %> doesn't have any products
+      <% end %>
+    </div>
+
+    <div class="row nested-row vendor-locations">
+      <% @vendor.locations.each do |location| %>
+        <div class="location-details">
+          <div class="row">
+            <div class="col-md-6">
+              <h4>City: </h4>
+              <p><%= location.city %></p>
+            </div>  
+            <div class="col-md-6">
+              <h4>Neighbourhood: </h4>
+              <p><%= location.neighbourhood %></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Name: </h4>
+              <p><%= location.name %></p>
+            </div>
+            <div class="col-md-6">
+              <h4>Cross Street: </h4>
+              <p><%= location.cross_street %></p>
+            </div>   
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Description: </h4>
+              <p><%= location.description %></p>
+            </div>
+            <div class="col-md-6">
+              <h4>Hours:</h4>
+              <p><%= location.hours %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>      
+    </div>
+
+    <div class="row nested-row vendor-edited-by">
+      <div class="col-md-12">
+        <p><%= "Last edited by: #{@vendor.updated_by.full_name.titleize} on #{@vendor.updated_at.strftime("%B #{@vendor.updated_at.day.ordinalize} at %l:%M%p")}" if @vendor.updated_by.present? %></p>        
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-4">
+    <%= image_tag @vendor.image, class: "img-responsive" %>
+  </div>
+</div>

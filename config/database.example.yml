@@ -1,0 +1,8 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  username: tylor
+  password:
+  database: megaphone_development
+  pool: 5
+  host: localhost

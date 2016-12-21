@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-8">
+    <h1>Unclaimed Payments</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 unclaimed-payments">
+    <% if @vendors_awaiting_payments.length <= 0 %>
+      <p>There are no unclaimed payments.</p>
+    <% end %>
+    <% @vendors_awaiting_payments.each do |vendor| %>
+      <%= link_to vendor_path(vendor), class: 'col-sm-3 vendor-card' do %>
+      <div class=" awaiting-payments">
+        <div class="profile-image-container"><%= image_tag vendor.image.thumb.url %></div>
+        <div class="vendor-name"><%= vendor.name %></div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <h1>Current Products Showing In App</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 products-list">
+    <% @in_app_products.each do |product| %>
+      <%= link_to edit_product_path(product) do %>
+      <div class="col-md-12 dashboard-product">
+        <div class="col-md-12">
+          <%= image_tag product.image.profile.url, height: 100 %>
+        </div>
+        <div class="col-md-12 product-title">
+          <%= product.title %>
+        </div>
+      </div>
+      <% end %>
+    <% end %>    
+  </div>
+</div>
