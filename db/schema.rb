@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160531174655) do
     t.integer  "created_by_id"
   end
 
+  add_index "administrators", ["full_name"], name: "index_administrators_on_full_name", unique: true, using: :btree
   add_index "administrators", ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true, using: :btree
 
   create_table "devices", force: :cascade do |t|
