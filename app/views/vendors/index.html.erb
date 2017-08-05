@@ -11,7 +11,6 @@
         <tr class="vendor-list-header">
           <th><%= sortable 'id' %></th>
           <th><%= sortable 'name' %></th>
-          <th>Neighbourhoods</th>
           <th><%= sortable 'in_app', 'Visible In App?' %></th>
         </tr>
       </thead>
@@ -20,7 +19,6 @@
           <tr class="vendor-row" data-link="<%= vendor_path(vendor) %>">
             <td><%= vendor.id %></td>
             <td><%= vendor.name %></td>
-            <td><%= vendor_neighbourhoods(vendor) %></td>
             <td><%= vendor.in_app ? "Yes" : "No" %></td>
           </tr>
         <% end %>
