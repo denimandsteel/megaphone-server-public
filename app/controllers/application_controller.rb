@@ -60,8 +60,6 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 
-
-
   def identify_device_token
     authenticate_or_request_with_http_token do |token, options|
       @device = Device.find_by(api_token: token)

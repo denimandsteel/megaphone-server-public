@@ -32,6 +32,8 @@ class PurchasesController < ApplicationController
     end
   end
 
+  # TODO: need to indicate which customer token is used to make the charge:
+  # apple pay / credit card
   def create
     # Will need to confirm device api_token before creating a purchase
     respond_to do |format|

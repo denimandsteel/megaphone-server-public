@@ -60,6 +60,7 @@ class DevicesController < ApplicationController
   end
 
   def update
+    # TODO: clean this up, remove app versioning here:
     # App version 1.2
     if params.has_key?(:card_number)
       begin
@@ -87,12 +88,14 @@ class DevicesController < ApplicationController
     # App version 1.3
     elsif params.has_key?(:stripe_card_token) and params.has_key?(:last_four_digits)
       begin
+        # TODO: do we need to make a new customer everytime the card is updated?
         customer = Stripe::Customer.create(
           source: params[:stripe_card_token],
           description: "Megaphone Customer"
         )
         
         @device.last_four_digits = params[:last_four_digits]
+        # TODO: rename payment_token to customer id?
         @device.payment_token = customer.id
 
       rescue Stripe::CardError => e
