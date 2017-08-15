@@ -39,7 +39,7 @@ class DevicesController < ApplicationController
             return render json: "Stripe: #{e.message}", status: 400
           end
 
-          @device.payment_token = customer.id
+          @device.stripe_customer = customer.id
         end
 
         if params.has_key?(:enable_location)
@@ -80,7 +80,7 @@ class DevicesController < ApplicationController
           description: "Megaphone Customer"
         )
 
-        @device.payment_token = customer.id
+        @device.stripe_customer = customer.id
 
       rescue Stripe::CardError => e
         return render json: "Stripe: #{e.message}", status: 400
@@ -95,8 +95,8 @@ class DevicesController < ApplicationController
         )
         
         @device.last_four_digits = params[:last_four_digits]
-        # TODO: rename payment_token to customer id?
-        @device.payment_token = customer.id
+        @device.stripe_customer = customer.id
+        @device.card_token = params[:stripe_card_token]
 
       rescue Stripe::CardError => e
         return render json: "Stripe: #{e.message}", status: 400
