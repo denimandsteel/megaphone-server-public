@@ -117,6 +117,10 @@ class DevicesController < ApplicationController
       @device.push_notification_token = params[:push_notification_token]
     end
 
+    if params.has_key?(:apple_pay_token)
+      @device.apple_pay_token = params[:apple_pay_token]
+    end
+
     if @device.save
       render json: @device
     else
