@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531174655) do
+ActiveRecord::Schema.define(version: 20170814231439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160531174655) do
   add_index "administrators", ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true, using: :btree
 
   create_table "devices", force: :cascade do |t|
-    t.string   "payment_token"
+    t.string   "stripe_customer"
     t.string   "api_token"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20160531174655) do
     t.boolean  "enable_location"
     t.string   "last_four_digits"
     t.string   "push_notification_token"
+    t.string   "card_token"
+    t.string   "apple_pay_token"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(version: 20160531174655) do
     t.string   "payment_id"
     t.integer  "tips"
     t.string   "transaction_id"
+    t.string   "payment_method"
   end
 
   add_index "purchases", ["device_id"], name: "index_purchases_on_device_id", using: :btree

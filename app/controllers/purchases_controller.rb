@@ -49,16 +49,32 @@ class PurchasesController < ApplicationController
 
         @purchase.products_amount = @purchase.product_total
 
-        # Will use the device payment_token to complete the transaction between the device and Megaphone
-        begin
-          charge = Stripe::Charge.create(
-            :customer    => @device.payment_token,
-            :amount      => @purchase.chargeable_amount,
-            :description => "Purchase #{@purchase.transaction_id} for #{@purchase.vendor.name} (#{@purchase.vendor.badge_id})",
-            :currency    => 'cad'
-          )
-        rescue => e
-          return render json: e.message, status: e.http_status
+        if @purchase.payment_method == "creditcard"
+          # Will use the device stripe_customer to complete the transaction
+          begin
+            charge = Stripe::Charge.create(
+              :customer    => @device.stripe_customer,
+              :amount      => @purchase.chargeable_amount,
+              :description => "Purchase #{@purchase.transaction_id} for #{@purchase.vendor.name} (#{@purchase.vendor.badge_id})",
+              :currency    => ENV['STRIPE_CURRENCY']
+            )
+          rescue => e
+            return render json: e.message, status: e.http_status
+          end
+        elsif @purchase.payment_method == "applepay"
+          # Will use the device apple_pay_token to complete the transaction
+          begin
+            charge = Stripe::Charge.create(
+              :source      => @device.apple_pay_token,
+              :amount      => @purchase.chargeable_amount,
+              :description => "Purchase #{@purchase.transaction_id} for #{@purchase.vendor.name} (#{@purchase.vendor.badge_id})",
+              :currency    => ENV['STRIPE_CURRENCY']
+            )
+          rescue => e
+            return render json: e.message, status: e.http_status
+          end
+        else
+          puts "Unknown payment type: #{@purchase.payment_method}"
         end
 
         @purchase.payment_id = charge.id
@@ -145,6 +161,7 @@ class PurchasesController < ApplicationController
       :vendor_id,
       :products_amount,
       :payment_id,
+      :payment_method,
       :tips,
       :product_ids => []
     )
