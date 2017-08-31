@@ -29,10 +29,10 @@ Dir.entries("#{Rails.root}/db/Vendor-Headshots").each do |vendor_image|
   puts "badge: #{badge_id}"
   vendor = Vendor.find_by(badge_id: badge_id)
   if vendor
-    if vendor.name == "Amin Massey"
+    # if vendor.name == "Amin Massey"
       puts "name: #{vendor.name}"
       vendor.image = File.open("#{Rails.root}/db/Vendor-Headshots/#{vendor_image}")
       vendor.save!
-    end
+    # end
   end
 end
