@@ -10,7 +10,7 @@
       <p>There are no unclaimed payments.</p>
     <% end %>
     <% @vendors_awaiting_payments.each do |vendor| %>
-      <%= link_to vendor_path(vendor), class: 'col-sm-3 vendor-card' do %>
+      <%= link_to vendor_path(vendor), class: 'vendor-card' do %>
       <div class=" awaiting-payments">
         <div class="profile-image-container">
           <% if !vendor.image.thumb.url.blank? %>
