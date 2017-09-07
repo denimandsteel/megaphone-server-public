@@ -121,8 +121,8 @@ class DevicesController < ApplicationController
       @device.apple_pay_token = params[:apple_pay_token]
     end
 
-    if params.has_key?(:preferred_payment_token)
-      @device.preferred_payment_token = params[:preferred_payment_token]
+    if params.has_key?(:preferred_payment_method)
+      @device.preferred_payment_method = params[:preferred_payment_method]
     end
 
     if @device.save
