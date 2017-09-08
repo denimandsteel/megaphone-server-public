@@ -136,7 +136,7 @@ class PurchasesController < ApplicationController
           registration_ids = [purchase.device.push_notification_token]
           options = { 
             notification: { 
-              title: "Megaphone Vendor Finder",
+              title: "Street Sense Vendor Payments",
               body: "#{purchase.vendor.name} just received the money from your purchase. Thank you!",
               badge: 0,
               sound: "default" 

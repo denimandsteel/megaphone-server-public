@@ -33,7 +33,7 @@ class DevicesController < ApplicationController
 
             customer = Stripe::Customer.create(
               source: card,
-              description: "Megaphone Customer"
+              description: "Street Sense Customer"
             )
           rescue Stripe::CardError => e
             return render json: "Stripe: #{e.message}", status: 400
@@ -77,7 +77,7 @@ class DevicesController < ApplicationController
         
         customer = Stripe::Customer.create(
           source: card,
-          description: "Megaphone Customer"
+          description: "Street Sense Customer"
         )
 
         @device.stripe_customer = customer.id
@@ -91,7 +91,7 @@ class DevicesController < ApplicationController
         # TODO: do we need to make a new customer everytime the card is updated?
         customer = Stripe::Customer.create(
           source: params[:stripe_card_token],
-          description: "Megaphone Customer"
+          description: "Street Sense Customer"
         )
         
         @device.last_four_digits = params[:last_four_digits]

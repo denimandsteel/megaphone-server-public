@@ -52,7 +52,7 @@ class ProductsController < ApplicationController
         
         options = { 
           notification: { 
-            title: "Megaphone Vendor Finder",
+            title: "Street Sense Vendor Payments",
             body: "New #{@product.title} now available!",
             badge: 0,
             sound: "default" 
