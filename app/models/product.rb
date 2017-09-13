@@ -26,8 +26,8 @@ class Product < ActiveRecord::Base
   protected
 
   def only_one_in_app
-    # only if magazine, multiple feature products can appear in the app at the same time.
-    if self.category == 'Magazine'
+    # only if newspaper, multiple feature products can appear in the app at the same time.
+    if self.category == 'Newspaper'
       Product.where.not(id: self.id).where(category: self.category).update_all(in_app: false) if self.in_app? && Product.where.not(id: self.id).where(category: self.category).available_in_app.any?  
     end
   end
