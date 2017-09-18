@@ -11,7 +11,7 @@
 }
 
 .vendor-card {
-  margin-bottom: 15px;
+  margin: 0 15px 15px 15px;
 }
 
 .unclaimed-payments {
@@ -41,14 +41,19 @@
   overflow: hidden;
   max-width: 80px;
   max-height: 80px;
+  img {
+    object-fit: cover;
+    width: 79px;
+    height: 79px;
+  }
 }
 
 .awaiting-payments {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  
   width: 100px; 
   height: 140px;
 

@@ -39,7 +39,7 @@ class DevicesController < ApplicationController
             return render json: "Stripe: #{e.message}", status: 400
           end
 
-          @device.payment_token = customer.id
+          @device.stripe_customer = customer.id
         end
 
         if params.has_key?(:enable_location)
@@ -60,6 +60,7 @@ class DevicesController < ApplicationController
   end
 
   def update
+    # TODO: clean this up, remove app versioning here:
     # App version 1.2
     if params.has_key?(:card_number)
       begin
@@ -79,7 +80,7 @@ class DevicesController < ApplicationController
           description: "Megaphone Customer"
         )
 
-        @device.payment_token = customer.id
+        @device.stripe_customer = customer.id
 
       rescue Stripe::CardError => e
         return render json: "Stripe: #{e.message}", status: 400
@@ -87,13 +88,15 @@ class DevicesController < ApplicationController
     # App version 1.3
     elsif params.has_key?(:stripe_card_token) and params.has_key?(:last_four_digits)
       begin
+        # TODO: do we need to make a new customer everytime the card is updated?
         customer = Stripe::Customer.create(
           source: params[:stripe_card_token],
           description: "Megaphone Customer"
         )
         
         @device.last_four_digits = params[:last_four_digits]
-        @device.payment_token = customer.id
+        @device.stripe_customer = customer.id
+        @device.card_token = params[:stripe_card_token]
 
       rescue Stripe::CardError => e
         return render json: "Stripe: #{e.message}", status: 400
@@ -112,6 +115,14 @@ class DevicesController < ApplicationController
 
     if params.has_key?(:push_notification_token)
       @device.push_notification_token = params[:push_notification_token]
+    end
+
+    if params.has_key?(:apple_pay_token)
+      @device.apple_pay_token = params[:apple_pay_token]
+    end
+
+    if params.has_key?(:preferred_payment_method)
+      @device.preferred_payment_method = params[:preferred_payment_method]
     end
 
     if @device.save
