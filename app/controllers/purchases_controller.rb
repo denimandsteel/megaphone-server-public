@@ -71,6 +71,7 @@ class PurchasesController < ApplicationController
               :currency    => ENV['STRIPE_CURRENCY']
             )
           rescue => e
+            puts e.inspect
             return render json: e.message, status: e.http_status
           end
         else
