@@ -16,7 +16,7 @@ class VendorsController < ApplicationController
       @vendors = @locations.map {|location| location.vendor}.uniq.reject { |vendor| !vendor }.sort! { |a,b| a.name.downcase <=> b.name.downcase }
     else
       @vendors = Vendor.includes(:locations, :products).all
-      @vendors = @vendors.order(sort_column + " " + sort_direction)
+      @vendors = @vendors.limit(25).order(sort_column + " " + sort_direction)
     end
     respond_to do |format|
       format.html
