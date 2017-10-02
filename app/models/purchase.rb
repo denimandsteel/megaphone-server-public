@@ -41,9 +41,9 @@ class Purchase < ActiveRecord::Base
       all.each do |user|
         csv << attributes.map do |attr| 
           if attr == 'products_amount' or attr == 'tips'
-            return "%.2f" % (user.send(attr) / 100.0)
+            "%.2f" % (user.send(attr) / 100.0)
           else
-            return user.send(attr)   
+            user.send(attr)   
           end
         end
       end
