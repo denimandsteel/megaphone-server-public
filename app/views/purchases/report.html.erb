@@ -12,11 +12,12 @@
     <table class="table">
       <thead>
         <tr class="vendor-list-header">
-          <th><%= sortable 'id' %></th>
-          <th><%= sortable 'vendor_id', "Vendor" %></th>
-          <th>Products</th>
+          <th><%= sortable 'id', "Purchase ID" %></th>
           <th><%= sortable 'created_at', "Date Of Sale" %></th>
+          <th><%= sortable 'vendor_id', "Vendor" %></th>
+          <th><%= sortable 'badge_id', "Badge" %></th>
           <th><%= sortable 'amount', "Total" %></th>
+          <th>Products</th>
           <th><%= sortable 'paid', 'Paid Out?' %></th>
           <th><%= sortable 'paid_at', "Paid On" %></th>
           <th><%= sortable 'paid_by_id', "Paid By" %></th>
@@ -26,10 +27,11 @@
         <% @purchases.each do |purchase| %>
           <tr class="vendor-row" data-link="<%= purchase.paid ? "#!" : vendor_path(purchase.vendor) %>">
             <td><%= purchase.id %></td>
-            <td><%= purchase.vendor.name %></td>
-            <td><%= purchase.products_titles %></td>
             <td><%= purchase.created_at.strftime("%B #{purchase.created_at.day.ordinalize}, %Y") %></td>
+            <td><%= purchase.vendor.name %></td>
+            <td><%= purchase.vendor.badge_id %></td>
             <td><%= number_to_currency purchase.total_amount / 100.0 %></td>
+            <td><%= purchase.products_titles %></td>
             <td><%= purchase.paid ? "Yes" : "No" %></td>
             <td><%= purchase.paid_at.try { strftime("%B #{purchase.paid_at.day.ordinalize}, %Y")}   %></td>
             <td><%= purchase.paid_by.try { full_name.titleize } %></td>

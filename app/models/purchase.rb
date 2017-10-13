@@ -33,17 +33,17 @@ class Purchase < ActiveRecord::Base
   # convert products_amount to dollar values.
   # make sure tips is next to it.
   def self.to_csv
-    attributes = %w{id paid paid_at paid_by_id products_amount tips products_titles products_ids vendor_id device_id created_at updated_at payment_id transaction_id}
+    attributes = %w{id created_at vendor_name badge_id products_amount tips total products_titles payment_id transaction_id paid paid_at paid_by_id}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      all.each do |user|
+      all.each do |purchase|
         csv << attributes.map do |attr| 
-          if attr == 'products_amount' or attr == 'tips'
-            "%.2f" % (user.send(attr) / 100.0)
+          if attr == 'products_amount' or attr == 'tips' or attr == 'total'
+            "%.2f" % (purchase.send(attr) / 100.0)
           else
-            user.send(attr)   
+            purchase.send(attr)   
           end
         end
       end
@@ -51,11 +51,23 @@ class Purchase < ActiveRecord::Base
   end
 
   def products_titles
-    products.map(&:title).uniq.join(", ")
+    products.map(&:title).group_by {|x| x}.map {|k,v| "#{v.count} x #{k}"}.join(", ")
   end
 
   def products_ids
     products.map(&:id).uniq.join(", ")
+  end
+
+  def vendor_name
+    vendor.name
+  end
+
+  def badge_id
+    vendor.badge_id
+  end
+
+  def total
+    products_amount + tips
   end
 
 end
