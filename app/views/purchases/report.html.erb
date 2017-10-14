@@ -1,11 +1,32 @@
-<h1>
-  Purchases Report
-</h1>
+<h1>Purchases Report</h1>
 
-<p>
-  <%= link_to "Download CSV", report_purchases_path(format: "csv"), class: "btn btn-primary" %>
-  <%=  @downloaded_on.strftime("Last Downloaded On %B #{@downloaded_on.day.ordinalize} @ %I:%M%p") if @downloaded_on.present? %>
-</p>
+<div class="report-settings bs-callout bs-callout-info">
+  <div class="group">
+    <% if flash[:success] %>
+      <div class="alert alert-success">
+        <strong>Success!</strong> Settings saved successfully.
+      </div>
+    <% end %>
+    <label>Receive daily purchase reports:</label>
+    <%= form_tag({controller: "purchases", action: "report_settings"}, method: "post") do %>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <!-- <input type="checkbox" aria-label="" name="send_daily" checked=<%= @send_daily %> value='true'> -->
+          <%= check_box_tag :send_daily, 1, @send_daily%>
+        </span>
+        <input type="text" value="<%= @email %>" placeholder="email@example.com" name="email" class="form-control" aria-label="Text input with checkbox">
+      </div>
+      <%= submit_tag "Update", class: "btn btn-primary update" %>
+    <% end %>
+  </div>
+  <div class="group">
+    <label>Download the entire purchase history:</label>
+    <div class="input-group">
+      <%= link_to "Download CSV", report_purchases_path(format: "csv"), class: "btn btn-primary" %>
+      <div class="last-download"><%= @downloaded_on.strftime("Last Downloaded On %B #{@downloaded_on.day.ordinalize} @ %I:%M%p") if @downloaded_on.present? %></div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-12">

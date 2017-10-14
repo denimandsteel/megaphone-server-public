@@ -22,8 +22,10 @@ Rails.application.routes.draw do
   resources :purchases, only: [:create, :index, :update, :show] do
     collection do
       get :report
+      post :report_settings
     end
   end
+
   resources :locations, only: [:index] 
   resources :devices, only: [:create, :update, :index, :show] do
     get 'recent_vendors', on: :member

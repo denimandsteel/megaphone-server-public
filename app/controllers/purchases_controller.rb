@@ -20,6 +20,15 @@ class PurchasesController < ApplicationController
     @setting = Setting.find_or_create_by(setting_name: "Purchases Last Downloaded At")
     @downloaded_on = DateTime.strptime(@setting.setting_value) if @setting.setting_value.present?
 
+    @setting_email = Setting.find_or_create_by(setting_name: "Daily Report Email Address")
+    @setting_send_daily = Setting.find_or_create_by(setting_name: "Daily Report Send")
+
+    @email = @setting_email.setting_value if @setting_email.setting_value.present?
+    @send_daily = (@setting_send_daily.setting_value == "true") if @setting_send_daily.setting_value.present?
+
+    @setting_email.save
+    @setting_send_daily.save
+
     respond_to do |format|
       format.html { @purchases = @purchases.order(sort_column + " " + sort_direction).page(params[:page]).per(100) }
       format.csv do
@@ -30,6 +39,28 @@ class PurchasesController < ApplicationController
         return render json: @purchases
       end
     end
+  end
+
+  def report_settings
+    puts 'report_settings called!';
+    puts params.inspect
+    @setting_email = Setting.find_or_create_by(setting_name: "Daily Report Email Address")
+    @setting_send_daily = Setting.find_or_create_by(setting_name: "Daily Report Send")
+
+    if params.has_key?(:email)
+      @setting_email.update_attribute(:setting_value, params[:email])
+    end
+
+    if params.has_key?(:send_daily)
+      @setting_send_daily.update_attribute(:setting_value, 'true')
+    else
+      @setting_send_daily.update_attribute(:setting_value, 'false')
+    end
+
+    @setting_email.save
+    @setting_send_daily.save
+
+    redirect_to :back, flash: {success: true}
   end
 
   # TODO: need to indicate which customer token is used to make the charge:

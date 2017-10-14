@@ -1,0 +1,32 @@
+.report-settings {
+  width: 500px;
+  padding-bottom: 25px;
+  margin-top: 15px;
+
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-left-color: #337ab7;
+  border-radius: 3px;
+
+  .alert-success {
+    padding: 10px 5px;
+  }
+
+  .group {
+    margin-top: 15px;
+    &:first-child {
+      margin-top: 0px;
+    }
+    width: 450px;
+
+    .update {
+      margin-top: 10px;
+    }
+
+    .last-download {
+      margin-top: 10px;
+    }
+  }
+}
