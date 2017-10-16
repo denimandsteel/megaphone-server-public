@@ -6,27 +6,14 @@ task :send_daily_purchase_report => :environment do
   @filename = "#{todaysDate}-purchase-report.csv"
 
   if @setting_send_daily.setting_value == "true"
-    puts "going to send email to"
-    puts @setting_email.setting_value
-
     now = Time.now
     @purchases = Purchase.where(created_at: (now - 24.hours)..now)
-
-    totalSales = @purchases.sum("products_amount") + @purchases.sum("tips")
-    
+    totalSales = (@purchases.sum("products_amount") + @purchases.sum("tips")) / 100
     file = File.open(@filename, "w") do |csv|
       csv << @purchases.to_csv
     end
-
-    @subject = "#{todaysDate}: Total Sales $#{totalSales}"
-  
-    puts "filename: #{@filename}"
-    puts "subject: #{@subject}"
-
-    puts ReportMailer.inspect
-    
+    @subject = "Street Sense Media - #{todaysDate} Total Sales: $#{totalSales}"
     mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, @filename)
-
     mail = mail.deliver_now 
   end
 end
