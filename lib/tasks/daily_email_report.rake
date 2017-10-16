@@ -12,19 +12,20 @@ task :send_daily_purchase_report => :environment do
     now = Time.now
     @purchases = Purchase.where(created_at: (now - 24.hours)..now)
 
-    totalSales = @purchases.sum("total_amount")
+    totalSales = @purchases.sum("products_amount") + @purchases.sum("tips")
     
-    File.open(@filename, "w") do |csv|
+    file = File.open(@filename, "w") do |csv|
       csv << @purchases.to_csv
     end
 
     @subject = "#{todaysDate}: Total Sales $#{totalSales}"
   
-    puts "file is ready!"
+    puts "filename: #{@filename}"
+    puts "subject: #{@subject}"
 
     puts ReportMailer.inspect
     
-    mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, @filename, file)
+    mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, @filename)
 
     mail = mail.deliver_now 
   end
