@@ -49,8 +49,8 @@
           <tr class="vendor-row" data-link="<%= purchase.paid ? "#!" : vendor_path(purchase.vendor) %>">
             <td><%= purchase.id %></td>
             <td><%= purchase.created_at.strftime("%B #{purchase.created_at.day.ordinalize}, %Y") %></td>
-            <td><%= purchase.vendor.name %></td>
-            <td><%= purchase.vendor.badge_id %></td>
+            <td><%= purchase.vendor ? purchase.vendor.name : "N/A" %></td>
+            <td><%= purchase.vendor ? purchase.vendor.badge_id : "N/A" %></td>
             <td><%= number_to_currency purchase.total_amount / 100.0 %></td>
             <td><%= purchase.products_titles %></td>
             <td><%= purchase.paid ? "Yes" : "No" %></td>
