@@ -4,6 +4,7 @@
 @import "purchases";
 @import "dashboard";
 @import "dragula";
+@import "bootstrap-datepicker.min";
 
 nav {
   margin-bottom: 0 !important;
@@ -49,6 +50,10 @@ label {
 .back-button {
   display: block;
   margin: 20px 0 10px;
+}
+
+.btn-outline-secondary {
+  border: 1px solid rgba(0,0,0,0.2);
 }
 
 .info {

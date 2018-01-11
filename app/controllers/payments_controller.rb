@@ -7,8 +7,15 @@ class PaymentsController < ApplicationController
   
   def report
     query = {}
+    
     if params[:vendor]
       query[:vendor_id] = params[:vendor]
+    end
+
+    if params[:start] && params[:end]
+      start_date = Date.parse(params[:start]).beginning_of_day
+      end_date = Date.parse(params[:end]).end_of_day
+      query[:created_at] = start_date..end_date
     end
     
     @payments = Payment.where(query)
@@ -29,7 +36,7 @@ class PaymentsController < ApplicationController
   end
   
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end  
 
 end

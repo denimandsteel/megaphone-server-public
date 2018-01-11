@@ -17,10 +17,11 @@ class PurchasesController < ApplicationController
 
   def report
     query = {}
+
     if params[:vendor]
       query[:vendor_id] = params[:vendor]
     end
-    
+
     @purchases = Purchase.where(query)
     @setting = Setting.find_or_create_by(setting_name: "Purchases Last Downloaded At")
     @downloaded_on = DateTime.strptime(@setting.setting_value) if @setting.setting_value.present?
@@ -142,6 +143,7 @@ class PurchasesController < ApplicationController
     end
   end
 
+  # Note: This marks the purchase as paid!
   def update
     @vendor = Vendor.find(params[:id])
     @unpaid_purchases = @vendor.unpaid_purchases
@@ -159,7 +161,7 @@ class PurchasesController < ApplicationController
     })
 
     if @payment.save
-      redirect_to vendor_path(@vendor), notice: "#{@vendor.name} was successfully paid out!"
+      redirect_to vendor_path(@vendor), notice: "#{@vendor.name} was successfully paid out! Payment ID: #{@payment.id}"
 
       # PUSH NOTIFICATIONS
       gcm = GCM.new(ENV['GCM_API_KEY'])
@@ -178,9 +180,11 @@ class PurchasesController < ApplicationController
             },
             priority: 'high'
           }
-          response = gcm.send(registration_ids, options)
-          puts 'GCM response:'
-          puts response
+          if Rails.env.production?
+            response = gcm.send(registration_ids, options)
+            puts 'GCM response:'
+            puts response
+          end
         end    
       end
     else
@@ -211,7 +215,7 @@ class PurchasesController < ApplicationController
   end
   
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end  
 
 end
