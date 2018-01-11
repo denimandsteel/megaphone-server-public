@@ -6,7 +6,7 @@ class Device < ActiveRecord::Base
 
   def recent_vendors
     if purchases.present?
-      purchases.map { |purchase| purchase.vendor }.uniq{|vendor| vendor.id}
+      purchases.map { |purchase| purchase.vendor }.uniq{ |vendor| vendor.id }.select{ |vendor| vendor.in_app }
     else
       return nil
     end
