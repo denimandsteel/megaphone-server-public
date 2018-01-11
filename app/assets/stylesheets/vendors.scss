@@ -96,6 +96,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   }
 }
 
+.vendor-profile {
+  .profile-picture {
+    max-height: 350px;
+    max-width: 350px;
+  }
+}
+
 @media print {
   .back-button {
     display: none !important;

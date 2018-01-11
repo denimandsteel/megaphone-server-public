@@ -1,7 +1,7 @@
 <%= link_to raw("&larr; Back To Dashboard"), dashboard_path, class: 'back-button' %>
 <%= link_to raw("&larr; Back To Vendors"), vendors_path, class: 'back-button' %>
 
-<div class="row">
+<div class="row vendor-profile">
   <div class="col-md-4">
     <div class="row nested-row">
       <h1>
@@ -97,6 +97,6 @@
 
   </div>
   <div class="col-md-4">
-    <%= image_tag @vendor.image, class: "img-responsive" %>
+    <%= image_tag @vendor.image, class: "img-responsive profile-picture" %>
   </div>
 </div>
