@@ -33,7 +33,8 @@ class Purchase < ActiveRecord::Base
   # convert products_amount to dollar values.
   # make sure tips is next to it.
   def self.to_csv
-    attributes = %w{id created_at vendor_name badge_id products_amount tips total products_titles payment_id transaction_id paid paid_at paid_by_id}
+    # attributes = %w{id created_at vendor_name badge_id products_amount tips total products_titles payment_id transaction_id paid paid_at paid_by_id}
+    attributes = %w{created_at vendor_name badge_id total transaction_id}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -59,11 +60,11 @@ class Purchase < ActiveRecord::Base
   end
 
   def vendor_name
-    vendor.name
+    vendor ? vendor.name : "N/A"
   end
 
   def badge_id
-    vendor.badge_id
+    vendor ? vendor.badge_id : "N/A"
   end
 
   def total
