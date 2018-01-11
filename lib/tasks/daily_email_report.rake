@@ -1,5 +1,3 @@
-#TODO only report:  Date, Vendor Name, Vendor ID, Total Transaction Amount, Transaction ID
-# heroku pg:pull postgresql-silhouetted-38611 street_sense_development --app street-sense
 task :send_daily_purchase_report => :environment do
   @setting_email = Setting.find_by(setting_name: "Daily Report Email Address")
   @setting_send_daily = Setting.find_by(setting_name: "Daily Report Send")
@@ -17,7 +15,6 @@ task :send_daily_purchase_report => :environment do
     totalSales = (@purchases.sum("products_amount") + @purchases.sum("tips")) / 100
     file = File.open(@filename_all, "w") do |csv|
       csv << @purchases.to_csv
-
       csv << ['Total', '', '', totalSales, ''].to_csv
     end
 
@@ -29,7 +26,7 @@ task :send_daily_purchase_report => :environment do
       csv << ['Total', '', '', totalUnpaidSales, ''].to_csv
     end
 
-    @subject = "Street Sense Media - #{reportDate} Total Sales: $#{totalUnpaidSales}"
+    @subject = "Total Sales: $#{totalSales} - #{reportDate} "
     mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, [@filename_all, @filename_unpaid])
     mail = mail.deliver_now 
   end
