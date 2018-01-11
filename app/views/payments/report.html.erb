@@ -1,11 +1,4 @@
-<ul class="nav nav-pills sub-nav">
-  <li class="nav-item">
-    <a class="btn btn-outline-primary" href="/purchases/report">Purchases</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-outline-primary active" href="/payments/report">Payments</a>
-  </li>
-</ul>
+<%= render partial: "shared/reports_menu", locals: {active_tab: 'payments'} %>
 
 <h1>Payments Report</h1>
 
