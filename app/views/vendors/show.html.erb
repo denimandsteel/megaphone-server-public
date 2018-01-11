@@ -95,6 +95,11 @@
       </div>
     </div>
 
+    <div class="row nested-row">
+      <%= link_to "Purchases", report_purchases_path(vendor: @vendor.id), class: "btn btn-primary" %>
+      <%= link_to "Payments", report_payments_path(vendor: @vendor.id), class: "btn btn-primary" %>
+    </div>
+
   </div>
   <div class="col-md-4">
     <%= image_tag @vendor.image, class: "img-responsive profile-picture" %>

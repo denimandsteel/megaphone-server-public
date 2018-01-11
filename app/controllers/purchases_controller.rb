@@ -16,7 +16,12 @@ class PurchasesController < ApplicationController
   end
 
   def report
-    @purchases = Purchase.all
+    query = {}
+    if params[:vendor]
+      query[:vendor_id] = params[:vendor]
+    end
+    
+    @purchases = Purchase.where(query)
     @setting = Setting.find_or_create_by(setting_name: "Purchases Last Downloaded At")
     @downloaded_on = DateTime.strptime(@setting.setting_value) if @setting.setting_value.present?
 

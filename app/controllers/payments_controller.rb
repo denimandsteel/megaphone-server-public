@@ -6,8 +6,13 @@ class PaymentsController < ApplicationController
   before_action :only_managers, only: [:report]
   
   def report
-    @payments = Payment.all
+    query = {}
+    if params[:vendor]
+      query[:vendor_id] = params[:vendor]
+    end
     
+    @payments = Payment.where(query)
+
     respond_to do |format|
       format.html { @payments = @payments.order(sort_column + " " + sort_direction).page(params[:page]).per(100) }
       format.csv do

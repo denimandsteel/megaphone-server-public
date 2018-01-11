@@ -1,3 +1,12 @@
+<ul class="nav nav-pills sub-nav">
+  <li class="nav-item">
+    <a class="btn btn-outline-primary" href="/purchases/report">Purchases</a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-outline-primary active" href="/payments/report">Payments</a>
+  </li>
+</ul>
+
 <h1>Payments Report</h1>
 
 <div class="row">
@@ -5,8 +14,8 @@
     <table class="table">
       <thead>
         <tr class="vendor-list-header">
-          <th><%= sortable 'id', "Purchase ID" %></th>
-          <th><%= sortable 'created_at', "Date Of Sale" %></th>
+          <th><%= sortable 'id', "Payment ID" %></th>
+          <th><%= sortable 'created_at', "Date" %></th>
           <th><%= sortable 'vendor_id', "Vendor" %></th>
           <th><%= sortable 'badge_id', "Badge" %></th>
           <th><%= sortable 'amount', "Amount" %></th>
