@@ -1,0 +1,35 @@
+<h1>Payments Report</h1>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr class="vendor-list-header">
+          <th><%= sortable 'id', "Purchase ID" %></th>
+          <th><%= sortable 'created_at', "Date Of Sale" %></th>
+          <th><%= sortable 'vendor_id', "Vendor" %></th>
+          <th><%= sortable 'badge_id', "Badge" %></th>
+          <th><%= sortable 'amount', "Amount" %></th>
+          <th><%= sortable 'paid_by_id', "Paid By" %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @payments.each do |payment| %>
+          <tr class="payment-row">
+            <td><%= payment.id %></td>
+            <td><%= payment.created_at.strftime("%B #{payment.created_at.day.ordinalize}, %Y") %></td>
+            <td><%= payment.vendor ? payment.vendor.name : "N/A" %></td>
+            <td><%= payment.vendor ? payment.vendor.badge_id : "N/A" %></td>
+            <td><%= number_to_currency payment.amount / 100.0 %></td>
+            <td><%= payment.paid_by.full_name.capitalize %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= paginate @payments %>
+    </div>
+  </div>
+</div>

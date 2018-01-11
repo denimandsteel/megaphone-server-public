@@ -26,6 +26,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :payments do
+    collection do
+      get :report
+    end
+  end
+
+
   resources :locations, only: [:index] 
   resources :devices, only: [:create, :update, :index, :show] do
     get 'recent_vendors', on: :member
