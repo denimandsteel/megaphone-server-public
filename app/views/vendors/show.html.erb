@@ -5,7 +5,8 @@
   <div class="col-md-4">
     <div class="row nested-row">
       <h1>
-        <%= @vendor.name %> <!-- <small>(Badge ID: <%#= @vendor.badge_id %>)</small>  -->  
+        <%= @vendor.name %>
+        <div><small>Badge #<%= @vendor.badge_id %></small></div>
         <%= link_to "Edit Vendor", edit_vendor_path(@vendor), class: "btn btn-primary" if current_administrator.try(:manager) %>
       </h1>
       <h4><%= @vendor.in_app ? "Visible In App" : "Not Visible In App" %></h4>
