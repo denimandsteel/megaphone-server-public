@@ -1,6 +1,4 @@
 $(document).on('ready page:load', function() {
-  console.log('here!');
-
   var startDateParam = getUrlParameter('start');
   var endDateParam = getUrlParameter('end');
 
