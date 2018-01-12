@@ -40,6 +40,8 @@ gem 'dragula-rails'
 
 gem 'gcm'
 
+gem 'momentjs-rails'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

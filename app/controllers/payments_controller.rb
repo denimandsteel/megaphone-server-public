@@ -15,8 +15,12 @@ class PaymentsController < ApplicationController
     if params[:start] && params[:end]
       start_date = Date.parse(params[:start]).beginning_of_day
       end_date = Date.parse(params[:end]).end_of_day
-      query[:created_at] = start_date..end_date
+    else 
+      start_date = Date.today.beginning_of_day
+      end_date = Date.yesterday.end_of_day
     end
+
+    query[:created_at] = start_date..end_date
     
     @payments = Payment.where(query)
 
