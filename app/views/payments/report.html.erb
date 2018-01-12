@@ -16,30 +16,34 @@
 
 <div class="row">
   <div class="col-md-12">
-    <table class="table">
-      <thead>
-        <tr class="vendor-list-header">
-          <th><%= sortable 'id', "Payment ID" %></th>
-          <th><%= sortable 'created_at', "Date" %></th>
-          <th><%= sortable 'vendor_id', "Vendor" %></th>
-          <th><%= sortable 'badge_id', "Badge" %></th>
-          <th><%= sortable 'amount', "Amount" %></th>
-          <th><%= sortable 'paid_by_id', "Paid By" %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @payments.each do |payment| %>
-          <tr class="payment-row">
-            <td><%= payment.id %></td>
-            <td><%= payment.created_at.strftime("%B #{payment.created_at.day.ordinalize}, %Y") %></td>
-            <td><%= payment.vendor ? payment.vendor.name : "N/A" %></td>
-            <td><%= payment.vendor ? payment.vendor.badge_id : "N/A" %></td>
-            <td><%= number_to_currency payment.amount / 100.0 %></td>
-            <td><%= payment.paid_by.full_name.capitalize %></td>
+    <% if !@payments.empty? %>
+      <table class="table">
+        <thead>
+          <tr class="vendor-list-header">
+            <th><%= sortable 'id', "Payment ID" %></th>
+            <th><%= sortable 'created_at', "Date" %></th>
+            <th><%= sortable 'vendor_id', "Vendor" %></th>
+            <th><%= sortable 'badge_id', "Badge" %></th>
+            <th><%= sortable 'amount', "Amount" %></th>
+            <th><%= sortable 'paid_by_id', "Paid By" %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>    
+        </thead>
+        <tbody>
+          <% @payments.each do |payment| %>
+            <tr class="payment-row">
+              <td><%= payment.id %></td>
+              <td><%= payment.created_at.strftime("%B #{payment.created_at.day.ordinalize}, %Y") %></td>
+              <td><%= payment.vendor ? payment.vendor.name : "N/A" %></td>
+              <td><%= payment.vendor ? payment.vendor.badge_id : "N/A" %></td>
+              <td><%= number_to_currency payment.amount / 100.0 %></td>
+              <td><%= payment.paid_by.full_name.capitalize %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>  
+    <% else %>  
+      <div>No payments found for those dates.</div>
+    <% end %>
   </div>
   <div class="col-md-12">
     <div class="text-center">

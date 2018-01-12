@@ -7,8 +7,8 @@ $(document).on('ready page:load', function() {
     initStartDate = moment(Date.parse(startDateParam)).format("MM/DD/YYYY");
     initEndDate = moment(Date.parse(endDateParam)).format("MM/DD/YYYY");
   } else {
-    initEndDate = moment().format("MM/DD/YYYY");
-    initStartDate = moment().add(-1, 'days').format("MM/DD/YYYY");
+    initEndDate = moment().endOf('day').format("MM/DD/YYYY");
+    initStartDate = moment().startOf('day').format("MM/DD/YYYY");
   }
 
   $('.input-daterange input').first().val(initStartDate);
