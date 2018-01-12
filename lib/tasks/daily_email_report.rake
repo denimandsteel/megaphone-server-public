@@ -1,10 +1,11 @@
+# > rake send_daily_purchase_report
 task :send_daily_purchase_report => :environment do
   @setting_email = Setting.find_by(setting_name: "Daily Report Email Address")
   @setting_send_daily = Setting.find_by(setting_name: "Daily Report Send")
 
-  reportDate = (Date.today-1).strftime("%A %B %d %Y")
-  @filename_all = "#{reportDate}_All_Transactions.csv"
-  @filename_unpaid = "#{reportDate}_Unpaid_Transactions.csv"
+  reportDate = (Date.today-1).strftime("%b-%d-%Y")
+  @filename_all = "Daily_#{reportDate}.csv"
+  @filename_unpaid = "Unpaid_#{reportDate}.csv"
 
   if @setting_send_daily.setting_value == "true"
     now = Time.now
@@ -19,15 +20,19 @@ task :send_daily_purchase_report => :environment do
     end
 
     # Second report: Unpaid Transactions
-    @unpaid_purchases = Purchase.where("DATE(created_at) = ? AND paid = false", Date.today-1)
+    @unpaid_purchases = Purchase.where("paid = false")
     totalUnpaidSales = (@unpaid_purchases.sum("products_amount") + @unpaid_purchases.sum("tips")) / 100
     file = File.open(@filename_unpaid, "w") do |csv|
       csv << @unpaid_purchases.to_csv
       csv << ['Total', '', '', totalUnpaidSales, ''].to_csv
     end
 
-    @subject = "Total Sales: $#{totalSales} - #{reportDate} "
-    mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, [@filename_all, @filename_unpaid])
+    @subject = "#{reportDate} - Purchase Report"
+
+    body = "Daily Sales: $#{totalSales}\n";
+    body += "Unpaid so far: $#{totalUnpaidSales}\n";
+
+    mail = ReportMailer.daily_report(@setting_email.setting_value, @subject, body, [@filename_all, @filename_unpaid])
     mail = mail.deliver_now 
   end
 end
