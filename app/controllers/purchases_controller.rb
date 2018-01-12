@@ -161,7 +161,7 @@ class PurchasesController < ApplicationController
     })
 
     if @payment.save
-      redirect_to vendor_path(@vendor), notice: "#{@vendor.name} was successfully paid out! Payment ID: #{@payment.id}"
+      redirect_to vendor_path(@vendor, payment: @payment.id), notice: "#{@vendor.name} was successfully paid out! Payment ID: #{@payment.id}"
 
       # PUSH NOTIFICATIONS
       gcm = GCM.new(ENV['GCM_API_KEY'])

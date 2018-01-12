@@ -1,6 +1,7 @@
 $(document).on('ready page:load', function() {
   var startDateParam = getUrlParameter('start');
   var endDateParam = getUrlParameter('end');
+  var vendorParam = getUrlParameter('vendor');
 
   if (startDateParam && endDateParam) {
     initStartDate = moment(Date.parse(startDateParam)).format("MM/DD/YYYY");
@@ -16,7 +17,7 @@ $(document).on('ready page:load', function() {
   $('.input-daterange').datepicker().on('changeDate', function (ev) {
     var startDate = $('.input-daterange input').first().datepicker('getDates')[0];
     var endDate = $('.input-daterange input').last().datepicker('getDates')[0];
-    $('#submit-range').attr('href', "/payments/report?start=" + startDate.toDateString() + "&end=" + endDate.toDateString());
+    $('#submit-range').attr('href', "/payments/report?start=" + startDate.toDateString() + "&end=" + endDate.toDateString() + (vendorParam ? '&vendor=' + vendorParam: ''));
   });
 });
 

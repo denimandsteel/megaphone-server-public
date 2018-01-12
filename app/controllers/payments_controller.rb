@@ -10,17 +10,20 @@ class PaymentsController < ApplicationController
     
     if params[:vendor]
       query[:vendor_id] = params[:vendor]
+    else 
+      # use default start and end dates only if the vendor parameter is not present.
+      start_date = Date.today.beginning_of_day
+      end_date = Date.yesterday.end_of_day
     end
 
     if params[:start] && params[:end]
       start_date = Date.parse(params[:start]).beginning_of_day
       end_date = Date.parse(params[:end]).end_of_day
-    else 
-      start_date = Date.today.beginning_of_day
-      end_date = Date.yesterday.end_of_day
     end
 
-    query[:created_at] = start_date..end_date
+    if start_date && end_date
+      query[:created_at] = start_date..end_date  
+    end
     
     @payments = Payment.where(query)
 
