@@ -29,7 +29,7 @@
       <% if @last_payment.present? %>
         <div class="col-md-6">
           <strong>Last Payout:</strong><br/>
-          <%=  @last_payment.created_at.strftime("%B #{@last_payment.created_at.day.ordinalize}, %Y") %> | <%= number_to_currency @last_payment.amount / 100.0 %><br/>  by <%= @last_payment.paid_by.full_name.titleize %>
+          <%=  @last_payment.created_at.strftime("%B #{@last_payment.created_at.day.ordinalize}, %Y") %> | <%= number_to_currency @last_payment.amount / 100.0 %><br/>  by <%= @last_payment.paid_by.present? ? @last_payment.paid_by.full_name.titleize : 'N/A' %>
         </div>
       <% end %>
     </div>
