@@ -4,7 +4,8 @@ class PurchasesController < ApplicationController
   helper_method :sort_column, :sort_direction, :purchased_products_ids, :purchased_products_titles
 
   before_action :identify_device_token, only: [:create, :index, :show]
-  before_action :only_managers, only: [:update, :report]
+  before_action :only_admin, only: [:update]
+  before_action :only_managers, only: [:report]
   before_action :load_purchase, only: [:show] 
 
   def index
