@@ -11,7 +11,7 @@ task :send_daily_purchase_report => :environment do
     now = Time.now
     # This task is run at midnight so we want all purchases that happened yesterday:
     
-    # First report: All Transactions
+    # First report: Yesterday's Sales
     @purchases = Purchase.where("DATE(created_at) = ?", Date.today-1)
     totalSales = (@purchases.sum("products_amount") + @purchases.sum("tips")) / 100
     file = File.open(@filename_all, "w") do |csv|
@@ -19,8 +19,8 @@ task :send_daily_purchase_report => :environment do
       csv << ['Total', '', '', totalSales, ''].to_csv
     end
 
-    # Second report: Unpaid Transactions
-    @unpaid_purchases = Purchase.where("paid = false")
+    # Second report: Unpaid Transactions so far
+    @unpaid_purchases = Purchase.where("paid = false").where("DATE(created_at) < ?", Date.today)
     totalUnpaidSales = (@unpaid_purchases.sum("products_amount") + @unpaid_purchases.sum("tips")) / 100
     file = File.open(@filename_unpaid, "w") do |csv|
       csv << @unpaid_purchases.to_csv
